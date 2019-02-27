@@ -1,0 +1,138 @@
+
+
+
+<nav class="navbar navbar-default" style="background-image:linear-gradient(45deg, #2E266F 0%, #7C2289 100%);">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <form class="navbar-form navbar-right">
+          <label>Eth Address&nbsp;&nbsp;</label>
+        <div class="form-group">
+          <input type="text" class="form-control"  placeholder="Eth Address" value={{eth_address}} readonly>
+        </div>
+        <label>Eth Balance&nbsp;&nbsp;</label>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Eth balance" value={{eth_balance}} readonly>
+        </div>
+        <label>Token Balance&nbsp;&nbsp;</label>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Token balance" value={{token_balance}} readonly>
+        </div>
+        <div class="form-group">
+          <input type="button" style="margin:0 0 0 10px" class="btn btn-success" value="Logout" (click)="logout()">
+        </div>
+      </form>
+    </div>
+  </div>
+ </nav>
+
+
+<div class="container-fluid" style="margin: 10% 0 0 0">
+   <div class="row">
+ <div class="col-sm-5">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Token Transfer</h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-6">
+          <input type="text" class="form-control text-margin" #address  id="add1" placeholder="Account Address">
+        </div>
+        <div class="col-sm-6">
+          <input type="text" class="form-control text-margin" #token  id="bal1" placeholder="No of Token">
+        </div>
+      </div>
+      <div class="row" style="text-align: center;margin:20px 0 0 0;">
+        <button class="btn btn-success" (click)="transfer1(address.value,token.value)">Transfer Token</button>
+      </div>
+      <div style="margin-top:8px;">
+      <p *ngIf="success_message_1" style="text-align: center;color: green">Transferred Successfully</p>
+      <p *ngIf="revert_error_1" style="text-align: center;color: red">Unable To Perform This Transaction</p>
+      <p *ngIf="invalid_error_1" style="text-align: center;color: red">Enter Valid Details</p>
+    </div>
+    </div>
+  </div>
+ </div>
+ <div class="col-sm-2"></div>
+ <div class="col-sm-5">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Token Transfer</h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">            
+            <select class="form-control" #options (change)="select_address(options.value)">
+                <option>Select</option>
+              <option *ngFor="let i of users" value={{i.address}}>{{i.id}}</option>
+              
+            </select>
+          </div>
+          
+        </div>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" #tokn id="bal2" placeholder="No of Token">
+        </div>
+      </div>
+      <div class="row" style="margin:20px 0 0 0;">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" #addres  id="add2" placeholder="Address" readonly style="display: none">
+        </div>
+        <div class="col-sm-3"></div>
+      </div>
+      <div class="row" style="text-align: center;margin:20px 0 0 0;">
+        <button class="btn btn-success" (click)="transfer2(tokn.value)">Transfer Token</button>
+      </div>
+      <div style="margin-top:8px;">
+      <p *ngIf="success_message_2" style="text-align: center;color: green">Transferred Successfully</p>
+      <p *ngIf="revert_error_2" style="text-align: center;color: red">Unable To Perform This Transaction</p>
+      <p *ngIf="invalid_error_2" style="text-align: center;color: red">Enter Valid Details</p>
+    </div>
+    </div>
+  </div>
+ </div>
+ </div>
+ </div>
+  
+ <div class="container">
+    <div class="row">
+      <div class="col-sm-12" style="margin-top:40px;overflow-x:auto;height:300px">
+      <table class="table table-bordered" >
+      <thead >
+          <tr>
+            <th>Block No</th>
+            <th>Address</th>
+            <th>No of Tokens</th>
+            <th>Transaction Details</th>
+          </tr>
+        </thead>
+        <tbody >
+              <tr *ngFor="let i of events">
+                  <td>{{i.blockNumber}}</td>
+                  <td>{{i.address}}</td>
+                  <td>{{i.tokens}}</td>
+                  <td><a href="https://ropsten.etherscan.io/tx/{{i.txhash}}" style="color:#7C2289 " target="blank">Click here</a></td>
+                </tr>     
+              </tbody>
+        </table>
+      </div>
+    </div>
+   </div>
+ <ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple">
+ <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
